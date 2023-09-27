@@ -3,12 +3,13 @@ const usersRouter = require("./usersRouter");
 
 const mainRouter = Router();
 
-mainRouter.use("/products", (req, res) => {
-    res.status(200).send("Aquí irá el router de los productos!")
-});
 
 mainRouter.use("/users", usersRouter);
 
+
+mainRouter.use("/products", (req, res) => {
+    res.status(200).send("Aquí irá el router de los productos!")
+});
 
 
 module.exports = mainRouter;

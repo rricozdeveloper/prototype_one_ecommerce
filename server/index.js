@@ -19,11 +19,13 @@
 //            '==============` am Israel Jaí!
 
 const app = require("./src/app");
+const { conn } = require('./src/db.js');
 const PORT = 3001;
 
-
-app.listen(PORT, () => {
-    console.log(`listening on port ${PORT}`);
+conn.sync({ force: false }).then(() => {
+    app.listen(PORT, () => {
+        console.log(`listening on port ${PORT}`);
+    });
 });
 
 

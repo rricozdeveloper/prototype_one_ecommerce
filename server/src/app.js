@@ -1,7 +1,7 @@
 // That this is where our application will go.
 const express = require("express");
 const morgan = require("morgan");
-const mainRouter = require("./routes")
+const mainRouter = require("./routes/index")
 // Import the "mainRouter" module, presumably containing the routing logic for our application, from a file named "routes.js" in the current directory.
 
 const app = express(); // server
