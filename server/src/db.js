@@ -12,13 +12,10 @@ const {
     DB_HOST 
 } = process.env;
 
-// Option 1: Passing a connection URI
-// const sequelize = new Sequelize('postgres://user:pass@example.com:5432/dbname')
-// const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/prototype`,{ logging:false });
 
 const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/prototype`, {
-  logging: false, // set to console.log to see the raw SQL queries
-  native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+  logging: false, // Establece en console.log para lograr ver las consultas SQL sin procesar.
+  native: false, // le permite a Sequelize saber que podemos usar pg-native para ~30% más de velocidad
   define: {
     charset: 'utf8',
     collate: 'utf8_general_ci',
@@ -36,7 +33,7 @@ fs.readdirSync(path.join(__dirname, '/models'))
     modelDefiners.push(require(path.join(__dirname, '/models', file)));
   });
 
-// Injectamos la conexion (sequelize) a todos los modelos
+// Inyectamos la conexión (sequelize) a todos los modelos
 modelDefiners.forEach(model => model(sequelize));
 // Capitalizamos los nombres de los modelos ie: product => Product
 let entries = Object.entries(sequelize.models);
@@ -45,7 +42,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { User, Role } = sequelize.models;
+const { User, Role, Product, Category } = sequelize.models;
 
 
 
@@ -53,6 +50,13 @@ const { User, Role } = sequelize.models;
 // Product.hasMany(Reviews);
 User.belongsTo(Role, ({through: "user_role" })),// Un usuario pertenece a un rol
 Role.belongsToMany(User, ({through: "user_role"})) // Un rol puede tener varios usuarios
+
+// Product.belongsTo(Category, ({through: "product_category"})) // Un producto pertenece a una categoría
+// Category.belongsToMany(Product, ({through: "product_category"})) // Una categoría puede tener varios productos
+
+Product.belongsTo(Category); // Un producto pertenece a una categoría
+Category.hasMany(Product); // Una categoría puede tener varios productos
+
 
 
 module.exports = {

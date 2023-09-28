@@ -18,11 +18,12 @@
 //             ___.-"^^"-.___
 //            '==============` am Israel Jaí!
 
+require("./seedDb");
 const app = require("./src/app");
 const { conn } = require('./src/db.js');
 const PORT = 3001;
 
-conn.sync({ force: false }).then(() => {
+conn.sync({ Alter: true }).then(() => {
     app.listen(PORT, () => {
         console.log(`listening on port ${PORT}`);
     });
