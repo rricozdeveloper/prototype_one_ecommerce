@@ -1,15 +1,14 @@
 const { Router } = require("express");
 const usersRouter = require("./usersRouter");
+const productRouter = require("./productRouter");
 
 const mainRouter = Router();
 
-
+// route para operaciones de usuarios
 mainRouter.use("/users", usersRouter);
 
-
-mainRouter.use("/products", (req, res) => {
-    res.status(200).send("Aquí irá el router de los productos!")
-});
+// route para operaciones de productos
+mainRouter.use("/products", productRouter);
 
 
 module.exports = mainRouter;
